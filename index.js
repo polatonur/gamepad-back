@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
   });
 });
 
-///////////////// ALL ROUTES //////////////////
+///////////////// ALL ROUTES /////////////////
 app.all("*", (req, res) => {
   res.status(400).json({
     message: "Ooops! page not found",
