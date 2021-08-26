@@ -19,6 +19,7 @@ router.get("/game/all", async (req, res) => {
       delete params[keys[i]];
     }
   }
+
   console.log(params);
   try {
     const response = await axios.get(

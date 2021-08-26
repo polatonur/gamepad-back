@@ -317,6 +317,7 @@ router.put("/user/collection/update", isAuthenticated, async (req, res) => {
       owner: id,
       game_id: gameData.id,
     });
+
     console.log(count);
     if (count === 0) {
       try {
