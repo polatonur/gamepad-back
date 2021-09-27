@@ -40,7 +40,7 @@ router.get("/game/all", async (req, res) => {
 ///////////////// UPDATE REVIEW RATING ROUTE //////////////////
 router.put("/game/review/rating", isAuthenticated, async (req, res) => {
   const { gameId, reviewId, like, userId } = req.fields;
-  console.log(gameId, reviewId, like, userId);
+  // console.log(gameId, reviewId, like, userId);
   try {
     // check if user alredy liked or disliked the review
     const user = await User.findById(userId);
@@ -49,7 +49,7 @@ router.put("/game/review/rating", isAuthenticated, async (req, res) => {
 
     if (like === "pozitive") {
       console.log("step _ 1");
-      console.log("poz==>", positiveReviews.indexOf(reviewId));
+      // console.log("poz==>", positiveReviews.indexOf(reviewId));
       if (
         positiveReviews.indexOf(reviewId) === -1 &&
         negativeReviews.indexOf(reviewId) === -1
@@ -91,7 +91,7 @@ router.put("/game/review/rating", isAuthenticated, async (req, res) => {
       });
     } else {
       console.log("step _ 1_neg");
-      console.log("neg==>", negativeReviews.indexOf(reviewId));
+      // console.log("neg==>", negativeReviews.indexOf(reviewId));
       if (
         negativeReviews.indexOf(reviewId) === -1 &&
         positiveReviews.indexOf(reviewId) === -1
@@ -270,18 +270,6 @@ router.put("/test", async (req, res) => {
   console.log("---------------------Test--------------------");
   console.log(req.files);
   console.log(req.fields);
-  // console.log("test");
-  // const userId = "6123691b2ef8ff139f73e5dd";
-
-  // const userToUpdate1 = await User.findByIdAndUpdate(userId, {
-  //   $pull: { positive_rating_list: { $in: ["yesss"] } },
-  // });
-
-  // // const userToUpdate2 = await User.findByIdAndUpdate(userId, {
-  // //   $push: {
-  // //     positive_rating_list: "yesssd",
-  // //   },
-  // // });
   res.json({
     message: "coucou",
   });

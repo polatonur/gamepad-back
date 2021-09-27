@@ -119,7 +119,7 @@ router.post("/user/login", async (req, res) => {
 });
 
 ///////////////// GET MY COLLECTION ROUTE //////////////////
-router.delete("/user/delete", async (req, res) => {
+router.delete("/user/delete", isAuthenticated, async (req, res) => {
   try {
     const { userId } = req.query;
     console.log("delete userId ====>", userId);
@@ -178,7 +178,7 @@ router.put("/user/account/update", isAuthenticated, async (req, res) => {
   try {
     const { userId, password, email, username, newPassword, fullName } =
       req.fields;
-    console.log(req.fields);
+    // console.log(req.fields);
     const user = await User.findById(userId);
     const message = {
       photo_updated: false,
@@ -299,7 +299,7 @@ router.get("/user/ratings/get", async (req, res) => {
   console.log(id);
   try {
     const myRatings = await User.findById(id);
-    console.log(myRatings.negative_rating_list, myRatings.positive_rating_list);
+    // console.log(myRatings.negative_rating_list, myRatings.positive_rating_list);
     res.status(200).json({
       user: {
         negative: myRatings.negative_rating_list,
@@ -325,7 +325,6 @@ router.put("/user/collection/update", isAuthenticated, async (req, res) => {
       owner: id,
       game_id: gameData.id,
     });
-    git;
     console.log(count);
     if (count === 0) {
       try {
@@ -343,10 +342,6 @@ router.put("/user/collection/update", isAuthenticated, async (req, res) => {
           count,
           results: updatedGameCollection,
         });
-
-        // res.status(200).json({
-        //   message: updatedGameCollection,
-        // });
       } catch (error) {
         console.log(error.message);
       }
