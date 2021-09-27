@@ -213,13 +213,8 @@ router.get("/game/reviews/get/:id", async (req, res) => {
       });
 
       let firstElement = reviewsDesc[0];
-      let secondElement = reviewsAsc[0];
-      if (String(firstElement._id) !== String(secondElement._id)) {
-        if (Math.abs(reviewsAsc[0].rating) > Math.abs(reviewsDesc[0].rating)) {
-          firstElement = reviewsAsc[0];
-          secondElement = reviewsDesc[0];
-        }
-
+      let lastElement = reviewsAsc[0];
+      if (String(firstElement._id) !== String(lastElement._id)) {
         for (let i = 0; i < reviews.length; i++) {
           if (String(reviews[i]._id) === String(firstElement._id)) {
             console.log("ok");
@@ -227,13 +222,14 @@ router.get("/game/reviews/get/:id", async (req, res) => {
           }
         }
         for (let i = 0; i < reviews.length; i++) {
-          if (String(reviews[i]._id) === String(secondElement._id)) {
+          if (String(reviews[i]._id) === String(lastElement._id)) {
             console.log("ok");
             reviews.splice(i, 1);
           }
         }
 
-        const sortedReviews = reviews.unshift(firstElement, secondElement);
+        const sortedReviews = reviews.unshift(firstElement);
+        reviews.push(lastElement);
       }
 
       res.status(200).json({

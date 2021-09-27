@@ -122,15 +122,23 @@ router.post("/user/login", async (req, res) => {
 router.delete("/user/delete", async (req, res) => {
   try {
     const { userId } = req.query;
-    console.log("delete userId ====>", req.query.userId);
-    const userToDelete = await User.findByIdAndDelete(userId);
-    const reviewsToDelete = await Review.deleteMany({ owner: userId });
+    console.log("delete userId ====>", userId);
+    const user = await User.findById(userId);
+
+    if (user.avatar.public_id) {
+      console.log("cloudinary");
+      await cloudinary.api.delete_resources([`${user.avatar.public_id}`]);
+      await cloudinary.api.delete_folder(`gamepad/${userId}`); //step-2 delete file
+    }
+
+    // const userToDelete = await User.findByIdAndDelete(userId);
+    const reviewsToDelete = await Review.deleteMany({
+      "owner.owner_id": userId,
+    });
     const gamesCollectionToDelete = await Game.deleteMany({ owner: userId });
 
     res.status(200).json({
-      deleted_user: userToDelete,
-      deleted_reviews: reviewsToDelete,
-      deleted_games_collection: gamesCollectionToDelete,
+      message: "deleted",
     });
   } catch (error) {
     console.log(error.message);
@@ -317,7 +325,7 @@ router.put("/user/collection/update", isAuthenticated, async (req, res) => {
       owner: id,
       game_id: gameData.id,
     });
-
+    git;
     console.log(count);
     if (count === 0) {
       try {
