@@ -12,13 +12,13 @@ const isAuthenticated = async (req, res, next) => {
       return next();
     } else {
       res.status(401).json({
-        message: "Unautorized",
+        message: "Unauthorized",
       });
       console.log("1");
     }
   } else {
     res.status(401).json({
-      message: "Unautorized",
+      message: "Unauthorized",
     });
     console.log("2");
   }
